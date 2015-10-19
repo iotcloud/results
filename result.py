@@ -18,6 +18,12 @@ def average(file_name, upperbound):
 def main():
     tasks = [10, 20, 30, 40, 50, 60]
     data = [10000, 20000, 40000, 60000, 80000, 100000, 120000, 140000, 160000, 180000, 200000]
+    print 'Original'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_original_OCT_07/" + str(d)  + "_" + str(t), 1000))
+        print s
     print 'async binary'
     for d in data:
         s = str(d)
