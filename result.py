@@ -60,5 +60,11 @@ def main():
         for t in tasks:
             s = s + " " + str(average("jstorm/jstorm_bcast_pipe8x4_OCT_13/" + str(d)  + "_" + str(t), 1000))
         print s
+    print 'binary_)CT_19'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_binary8x4_OCT_19/" + str(d)  + "_" + str(t), 1000))
+        print s
 if __name__ == "__main__":
     main()
