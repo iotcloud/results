@@ -29,6 +29,50 @@ def average(file_name, upperbound):
 
     return avg_of_numbers
 
+def slam():
+    part = [64, 128]
+    tasks = [8, 16, 32, 64]
+    print 'Original'
+    for p in part:
+        s = str(p)
+        for t in tasks:
+            best = "jstorm/tempest_original/const/" + str(p) + "_" + str(t) + "_2_best"
+            #print best
+            s = s + " " + str(average(best, 1000))
+        print s
+    print 'Original_OCT_25'
+    for p in part:
+        s = str(p)
+        for t in tasks:
+            best = "jstorm/tempest_original_OCT_25/const/" + str(p) + "_" + str(t) + "_2_best"
+            #print best
+            s = s + " " + str(average(best, 1000))
+        print s
+    print 'Flat2'
+    for p in part:
+        s = str(p)
+        for t in tasks:
+            best = "jstorm/tempest_flat2/const/" + str(p) + "_" + str(t) + "_2_best"
+            #print best
+            s = s + " " + str(average(best, 1000))
+        print s
+    print 'binary_OCT_23'
+    for p in part:
+        s = str(p)
+        for t in tasks:
+            best = "jstorm/tempest_binary_OCT_23/const/" + str(p) + "_" + str(t) + "_2_best"
+            #print best
+            s = s + " " + str(average(best, 1000))
+        print s
+    print 'binary_OCT_24b'
+    for p in part:
+        s = str(p)
+        for t in tasks:
+            best = "jstorm/tempest_binary_OCT_24/const/" + str(p) + "_" + str(t) + "_2_best"
+            #print best
+            s = s + " " + str(average(best, 1000))
+        print s
+
 def main():
     tasks = [10, 20, 30, 40, 50, 60]
     data = [10000, 20000, 40000, 60000, 80000, 100000, 120000, 140000, 160000, 180000, 200000]
