@@ -12,7 +12,7 @@ def average(file_name, upperbound):
 
         if len(numbers) > 0:
             sum_of_numbers = sum(numbers)
-            avg_of_numbers = (sum(numbers) + 0.0)/len(numbers)
+            avg_of_numbers = (sum(numbers) + 0.0)/(len(numbers) )
 
     with open(file_name, "r") as in_f:
         numbers = []
@@ -21,12 +21,12 @@ def average(file_name, upperbound):
             if line: # make sure there is something there
                 number_on_line = long(line)
                 # if number_on_line < upperbound and number_on_line < avg_of_numbers * 2:
-                if number_on_line < avg_of_numbers * 2:
+                if number_on_line < avg_of_numbers * 10:
                     numbers.append(number_on_line)
 
         if len(numbers) > 0:
             sum_of_numbers = sum(numbers)
-            avg_of_numbers = (sum(numbers) + 0.0)/(len(numbers) * 1000* 1000)
+            avg_of_numbers = (sum(numbers) + 0.0)/(len(numbers))
 
     return avg_of_numbers
 
@@ -59,9 +59,9 @@ def minmaxaverage(file_name):
 
         if len(numbers) > 0:
             sum_of_numbers = sum(numbers)
-            avg_of_numbers = (sum(numbers) * .001 + 0.0)/len(numbers)
-            min_of_numbers = (sum(minx) * .001 + 0.0)/len(minx)
-            max_of_numbers = (sum(maxes) * .001 + 0.0)/len(maxes)
+            avg_of_numbers = (sum(numbers)+ 0.0)/len(numbers)
+            min_of_numbers = (sum(minx)  + 0.0)/len(minx)
+            max_of_numbers = (sum(maxes) + 0.0)/len(maxes)
 
     return avg_of_numbers, min_of_numbers, max_of_numbers
 
@@ -115,28 +115,57 @@ def mma():
 
     print 'jstorm_bcast_original30x8x4_DEC_04'
     for d in data:
-        s = str(d)
+        minS = str(d)
+        maxS = str(d)
+        avS = str(d)
         for t in tasks:
-            s = s + " " + str(minmaxaverage("jstorm/jstorm_bcast_original30x8x4_DEC_04/" + str(d)  + "_" + str(t)))
-        print s
+            mm = minmaxaverage("jstorm/jstorm_bcast_original30x8x4_DEC_04/" + str(d) + "_" + str(t))
+            avS = avS + " " + str(mm[0])
+            minS = minS + " " + str(mm[1])
+            maxS = maxS + " " + str(mm[2])
+        print avS
+        print minS
+        print maxS
+
     print 'jstorm_bcast_binary30x8x4_DEC_05'
     for d in data:
-        s = str(d)
+        minS = str(d)
+        maxS = str(d)
+        avS = str(d)
         for t in tasks:
-            s = s + " " + str(minmaxaverage("jstorm/jstorm_bcast_binary30x8x4_DEC_05/" + str(d)  + "_" + str(t)))
-        print s
+            mm = minmaxaverage("jstorm/jstorm_bcast_binary30x8x4_DEC_05/" + str(d)  + "_" + str(t))
+            avS = avS + " " + str(mm[0])
+            minS = minS + " " + str(mm[1])
+            maxS = maxS + " " + str(mm[2])
+        print avS
+        print minS
+        print maxS
     print 'jstorm_bcast_pipesplit30x8x4_DEC_05'
     for d in data:
-        s = str(d)
+        minS = str(d)
+        maxS = str(d)
+        avS = str(d)
         for t in tasks:
-            s = s + " " + str(minmaxaverage("jstorm/jstorm_bcast_pipesplit30x8x4_DEC_05/" + str(d)  + "_" + str(t)))
-        print s
-    print 'jstorm_bcast_flat30x8x4_DEC_05'
+            mm = minmaxaverage("jstorm/jstorm_bcast_pipesplit30x8x4_DEC_05/" + str(d)  + "_" + str(t))
+            avS = avS + " " + str(mm[0])
+            minS = minS + " " + str(mm[1])
+            maxS = maxS + " " + str(mm[2])
+        print avS
+        print minS
+        print maxS
+    print '*************jstorm_bcast_flat30x8x4_DEC_05'
     for d in data:
-        s = str(d)
+        minS = str(d)
+        maxS = str(d)
+        avS = str(d)
         for t in tasks:
-            s = s + " " + str(minmaxaverage("jstorm/jstorm_bcast_flat30x8x4_DEC_05/" + str(d)  + "_" + str(t)))
-        print s
+            mm = minmaxaverage("jstorm/jstorm_bcast_flat30x8x4_DEC_05/" + str(d)  + "_" + str(t))
+            avS = avS + " " + str(mm[0])
+            minS = minS + " " + str(mm[1])
+            maxS = maxS + " " + str(mm[2])
+        print avS
+        print minS
+        print maxS
 
 def large():
     tasks = [10, 20, 30, 40, 50, 60]
@@ -159,6 +188,24 @@ def large():
         for t in tasks:
             s = s + " " + str(average("jstorm/jstorm_bcast_intra_large_pipesplit30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
         print s
+    print 'jstorm_bcast_large_binary30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_large_binary30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_large_flat30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_large_flat30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_large_pipesplit30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_large_pipesplit30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
     print 'jstorm_bcast_large30x8x4_DEC_05'
     for d in data:
         s = str(d)
@@ -166,9 +213,135 @@ def large():
             s = s + " " + str(average("jstorm/jstorm_bcast_large30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
         print s
 
-def main():
-    large()
+def normal():
+    tasks = [10, 20, 30, 40, 50, 60]
+    data = [100, 10000, 20000, 40000, 60000, 80000, 100000, 120000, 140000, 160000, 180000, 200000]
+    print 'jstorm_bcast_original30x8x4_DEC_04'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_original30x8x4_DEC_04/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_original30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_original30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_pipe30x8x4_DEC_03'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_pipe30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_pipe30x8x4_DEC_03'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_pipe30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_pipesplit30x8x4_DEC_03'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_pipesplit30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_binary30x8x4_DEC_04'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_binary30x8x4_DEC_04/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_flat30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_flat30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_binary30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_binary30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_flat30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_flat30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_pipesplit30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_pipesplit30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
 
+def normal2():
+    tasks = [10, 20, 30, 40, 50, 60]
+    data = [100, 10000, 20000, 40000, 60000, 80000, 100000, 120000, 140000, 160000, 180000, 200000]
+    print 'jstorm_bcast_original30x8x4_DEC_08'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_original30x8x4_DEC_04/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_original30x8x4_DEC_05'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_original30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_pipe30x8x4_DEC_03'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_pipe30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_pipe30x8x4_DEC_03'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_pipe30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_pipesplit30x8x4_DEC_08'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_pipesplit30x8x4_DEC_08/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_binary30x8x4_DEC_08'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_binary30x8x4_DEC_08/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_intra_flat30x8x4_DEC_08'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_intra_flat30x8x4_DEC_08/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_binary30x8x4_DEC_08'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_binary30x8x4_DEC_08/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_flat30x8x4_DEC_08'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_flat30x8x4_DEC_08/" + str(d)  + "_" + str(t), 1000))
+        print s
+    print 'jstorm_bcast_pipesplit30x8x4_DEC_08'
+    for d in data:
+        s = str(d)
+        for t in tasks:
+            s = s + " " + str(average("jstorm/jstorm_bcast_pipesplit30x8x4_DEC_08/" + str(d)  + "_" + str(t), 1000))
+        print s
+
+def main():
     tasks = [10, 20, 30, 40, 50, 60]
     data = [100, 10000, 20000, 40000, 60000, 80000, 100000, 120000, 140000, 160000, 180000, 200000]
     # print 'Original'
@@ -195,18 +368,18 @@ def main():
     #     for t in tasks:
     #         s = s + " " + str(average("jstorm/jstorm_bcast_async_pipe8x4_OCT_13/" + str(d)  + "_" + str(t), 1000))
     #     print s
-    print 'binary'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_binary8x4_OCT_13/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'flat'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_flat8x4_OCT_13/" + str(d)  + "_" + str(t), 1000))
-        print s
+    # print 'binary'
+    # for d in data:
+    #     s = str(d)
+    #     for t in tasks:
+    #         s = s + " " + str(average("jstorm/jstorm_bcast_binary8x4_OCT_13/" + str(d)  + "_" + str(t), 1000))
+    #     print s
+    # print 'flat'
+    # for d in data:
+    #     s = str(d)
+    #     for t in tasks:
+    #         s = s + " " + str(average("jstorm/jstorm_bcast_flat8x4_OCT_13/" + str(d)  + "_" + str(t), 1000))
+    #     print s
     # print 'pipe'
     # for d in data:
     #     s = str(d)
@@ -267,60 +440,8 @@ def main():
     #     for t in tasks:
     #         s = s + " " + str(average("jstorm/jstorm_bcast_async_binary1x8_NOV_30/" + str(d)  + "_" + str(t), 1000))
     #     print s
-    print 'jstorm_bcast_original30x8x4_DEC_04'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_original30x8x4_DEC_04/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_pipe30x8x4_DEC_03'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_pipe30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_intra_pipe30x8x4_DEC_03'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_intra_pipe30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_intra_pipesplit30x8x4_DEC_03'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_intra_pipesplit30x8x4_DEC_03/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_intra_binary30x8x4_DEC_04'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_intra_binary30x8x4_DEC_04/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_intra_flat30x8x4_DEC_05'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_intra_flat30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_binary30x8x4_DEC_05'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_binary30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_flat30x8x4_DEC_05'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_intra_flat30x8x4_DEC_04/" + str(d)  + "_" + str(t), 1000))
-        print s
-    print 'jstorm_bcast_pipesplit30x8x4_DEC_05'
-    for d in data:
-        s = str(d)
-        for t in tasks:
-            s = s + " " + str(average("jstorm/jstorm_bcast_pipesplit30x8x4_DEC_05/" + str(d)  + "_" + str(t), 1000))
-        print s
+
 if __name__ == "__main__":
-    # main()
-    mma()
+    normal()
+    # large()
+    # mma()
