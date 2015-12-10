@@ -196,10 +196,76 @@ def normal2():
     printAverage(tasks, data, 'jstorm_bcast_flat30x8x4_DEC_08')
     printAverage(tasks, data, 'jstorm_bcast_pipesplit30x8x4_DEC_08')
 
+
+def calcHist():
+    histogram(10, 'jstorm_bcast_intra_binary30x8x4_DEC_08', 60, 200000)
+    histogram(10, 'jstorm_bcast_intra_flat30x8x4_DEC_08', 60, 200000)
+    histogram(10, 'jstorm_bcast_intra_pipesplit30x8x4_DEC_08', 60, 200000)
+
+    histogram(10, 'jstorm_bcast_intra_binary30x8x4_DEC_08', 30, 200000)
+    histogram(10, 'jstorm_bcast_intra_flat30x8x4_DEC_08', 30, 200000)
+    histogram(10, 'jstorm_bcast_intra_pipesplit30x8x4_DEC_08', 30, 200000)
+
+def histogram(binNo, directory, task, data):
+    avg_of_numbers = 0
+    min_of_numbers = 0
+    max_of_numbers = 0
+    fileName = "jstorm/" + directory + "/" + str(data)  + "_" + str(task)
+    with open(fileName, "r") as in_f:
+        numbers = []
+        maxes = []
+        minx = []
+        for line in in_f:
+            minL = 1000000000
+            maxL = -10000000000
+            line = line.strip().split(',') # remove whitespace
+            lineSum = 0
+            for i in range(1, len(line)): # make sure there is something there
+                if line[i]:
+                    number_on_line = long(line[i].strip())
+                    if number_on_line < minL and number_on_line != 0:
+                        minL = number_on_line
+                    if number_on_line > maxL:
+                        maxL = number_on_line
+
+                    lineSum += number_on_line
+                    # if number_on_line < upperbound:
+            numbers.append(lineSum * 1.0 / (len(line) - 1))
+            maxes.append(maxL)
+            minx.append(minL)
+
+        if len(numbers) > 0:
+            sum_of_numbers = sum(numbers)
+            avg_of_numbers = (sum(numbers) * .000001+ 0.0)/len(numbers)
+            min_of_numbers = (sum(minx) * .000001 + 0.0)/len(minx)
+            max_of_numbers = (sum(maxes) * .000001 + 0.0)/len(maxes)
+    bins = []
+    delta = (max_of_numbers - min_of_numbers) / binNo
+    for i in range(0, binNo):
+        if (i < binNo - 1):
+            bin = {"end": (min_of_numbers + delta * i), "count": 0}
+        else:
+            bin = {"end": 1000000000000, "count": 0}
+        bins.append(bin)
+
+    with open(fileName, "r") as in_f:
+        for line in in_f:
+            line = line.strip().split(',') # remove whitespace
+            for i in range(1, len(line)): # make sure there is something there
+                if line[i]:
+                    number_on_line = long(line[i].strip()) * .000001
+                    for k in range(0, binNo):
+                        bin = bins[k]
+                        if (number_on_line < bin["end"]):
+                            bin["count"] += 1
+                            break
+    print bins
+
 def main():
     pass
 
 if __name__ == "__main__":
-    normal2()
+    calcHist()
+    #normal2()
     # large()
-    mma2()
+    #mma2()
